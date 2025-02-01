@@ -39,6 +39,8 @@ class CatagoryListScreen extends StatelessWidget {
     );
   }
 
+  
+
   void _onPop() {
     Get.find<MainBottomNavController>().backToHome();
   }

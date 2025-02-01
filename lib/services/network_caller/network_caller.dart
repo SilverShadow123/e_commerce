@@ -37,7 +37,36 @@ class NetworkCaller {
             isSuccess: false, stastusCode: response.statusCode);
       }
     } catch (e) {
-      _logResponse(url, -1, null, '');
+      _logResponse(url, -1, null, '', e.toString());
+      return NetworkResponse(
+          isSuccess: false, stastusCode: -1, errorMessage: e.toString());
+    }
+  }
+
+  Future<NetworkResponse> postRequest(String url,
+      {Map<String, dynamic>? body}) async {
+    try {
+      Uri uri = Uri.parse(url);
+      Map<String, String> headers = {
+        'content-type': 'application/json',
+      };
+
+      _logRequest(url, headers, body);
+      Response response =
+          await post(uri, headers: headers, body: jsonEncode(body));
+      _logResponse(url, response.statusCode, response.headers, response.body);
+      if (response.statusCode == 200) {
+        final decodeMessage = jsonDecode(response.body);
+        return NetworkResponse(
+            isSuccess: true,
+            stastusCode: response.statusCode,
+            responseData: decodeMessage);
+      } else {
+        return NetworkResponse(
+            isSuccess: false, stastusCode: response.statusCode);
+      }
+    } catch (e) {
+      _logResponse(url, -1, null, '', e.toString());
       return NetworkResponse(
           isSuccess: false, stastusCode: -1, errorMessage: e.toString());
     }
@@ -52,7 +81,7 @@ class NetworkCaller {
   }
 
   void _logResponse(
-      String url, int statusCode, Map<String, dynamic>? headers, String body,
+      String url, int statusCode, Map<String, String>? headers, String body,
       [String? errorMessage]) {
     if (errorMessage != null) {
       _logger.e('URL=> $url\nError Message=> $errorMessage');

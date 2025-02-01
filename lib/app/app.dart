@@ -6,10 +6,10 @@ import 'package:e_commerce/features/auth/ui/screens/otp_verification_screen.dart
 import 'package:e_commerce/features/auth/ui/screens/splash_screen.dart';
 import 'package:e_commerce/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:e_commerce/features/product/ui/screens/product_details_screen.dart';
-import 'package:e_commerce/features/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../features/auth/ui/screens/email_verification.dart';
+
+import '../features/auth/ui/screens/email_verification_screen.dart';
 import '../features/product/ui/screens/product_list_screen.dart';
 
 class CraftyBay extends StatelessWidget {
