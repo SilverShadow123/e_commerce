@@ -1,5 +1,4 @@
 import 'package:e_commerce/features/auth/ui/screens/email_verification_screen.dart';
-import 'package:e_commerce/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 import '../widgets/app_logo_widgets.dart';
 

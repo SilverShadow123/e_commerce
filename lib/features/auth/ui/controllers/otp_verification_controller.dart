@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
-
 import '../../../../app/urls.dart';
 import '../../../../services/network_caller/network_caller.dart';
 
-class EmailVerificationController extends GetxController {
+class OtpVerificationController extends GetxController {
   bool _inProgress = false;
 
   bool get inProgress => _inProgress;
@@ -12,12 +11,12 @@ class EmailVerificationController extends GetxController {
 
   String? get errorMessage => _errorMessage;
 
-  Future<bool> verifyEmail(String email) async {
+  Future<bool> verifyOtp(String email, String otp) async {
     bool isSuccess = false;
     _inProgress = true;
     update();
     final NetworkResponse response =
-        await Get.find<NetworkCaller>().getRequest(Urls.verifyEmailUrl(email));
+        await Get.find<NetworkCaller>().getRequest(Urls.verifyOtpUrl(email, otp));
     if (response.isSuccess) {
       _errorMessage = null;
       isSuccess = true;
