@@ -90,6 +90,7 @@ class _EmailVerificationState extends State<EmailVerification> {
     if (_formKey.currentState!.validate()) {
       bool isSuccess = await _emailVerificationController
           .verifyEmail(_emailTEController.text.trim());
+
       if (isSuccess) {
         if (mounted) {
           Navigator.pushNamed(
@@ -101,7 +102,9 @@ class _EmailVerificationState extends State<EmailVerification> {
       } else {
         if (mounted) {
           showSnackBarMessage(
-              context, _emailVerificationController.errorMessage!);
+            context,
+            _emailVerificationController.errorMessage!,
+          );
         }
       }
     }

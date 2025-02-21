@@ -166,12 +166,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         widget.email,
         _otpTEController.text,
       );
-      if (mounted){
-        Navigator.pushNamed(context, CompleteProfileScreen.name);
-      }
       if (response) {
         if (mounted) {
-          Navigator.pushNamed(context, CompleteProfileScreen.name);
+          Navigator.pushNamed(context, CompleteProfileScreen.name,);
         }
       } else {
         if (mounted) {
