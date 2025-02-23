@@ -1,3 +1,4 @@
+import 'package:e_commerce/features/auth/data/models/profile_model.dart';
 import 'package:get/get.dart';
 import '../../../../app/urls.dart';
 import '../../../../services/network_caller/network_caller.dart';
@@ -11,14 +12,25 @@ class ReadProfileController extends GetxController {
 
   String? get errorMessage => _errorMessage;
 
+  ProfileModel? _profileModel;
+
+  ProfileModel? get getProfileModel => _profileModel;
+
   Future<bool> readProfileData(String token) async {
     bool isSuccess = false;
     _inProgress = true;
     update();
-    final NetworkResponse response =
-    await Get.find<NetworkCaller>().getRequest(Urls.readProfile,accessToken: token);
+    final NetworkResponse response = await Get.find<NetworkCaller>().getRequest(
+      Urls.readProfile,
+      accessToken: token,
+    );
     if (response.isSuccess) {
       _errorMessage = null;
+      if (response.responseData['data' == null]) {
+        _profileModel = null;
+      } else {
+        _profileModel = ProfileModel.fromJson(response.responseData['data']);
+      }
       isSuccess = true;
     } else {
       _errorMessage = response.errorMessage;
