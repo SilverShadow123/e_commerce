@@ -2,6 +2,7 @@ import 'package:e_commerce/features/auth/ui/controllers/read_profile_controller.
 import 'package:get/get.dart';
 import '../../../../app/urls.dart';
 import '../../../../services/network_caller/network_caller.dart';
+import '../../../common/ui/controllers/auth_controller.dart';
 
 class OtpVerificationController extends GetxController {
   bool _inProgress = false;
@@ -13,7 +14,11 @@ class OtpVerificationController extends GetxController {
   String? get errorMessage => _errorMessage;
 
   bool _shouldNavigateCompleteProfile = false;
+
   bool get shouldNavigateCompleteProfile => _shouldNavigateCompleteProfile;
+
+  String? _token;
+  String? get token=> _token;
 
   Future<bool> verifyOtp(String email, String otp) async {
     bool isSuccess = false;
@@ -27,9 +32,11 @@ class OtpVerificationController extends GetxController {
       String token = response.responseData['data'];
       await Get.find<ReadProfileController>().readProfileData(token);
       if (Get.find<ReadProfileController>().getProfileModel == null) {
-      //TODO: complete profile
+        //TODO: complete profile
         _shouldNavigateCompleteProfile = true;
       } else {
+        await Get.find<AuthController>().saveUserData(
+            token, Get.find<ReadProfileController>().getProfileModel!);
         _shouldNavigateCompleteProfile = false;
       }
     } else {

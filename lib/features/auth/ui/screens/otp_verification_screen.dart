@@ -5,6 +5,7 @@ import 'package:e_commerce/features/auth/ui/controllers/otp_verification_control
 import 'package:e_commerce/features/auth/ui/controllers/read_profile_controller.dart';
 import 'package:e_commerce/features/auth/ui/screens/complete_profile_screen.dart';
 import 'package:e_commerce/features/auth/ui/widgets/app_logo_widgets.dart';
+import 'package:e_commerce/features/common/ui/screens/main_bottom_nav_screen.dart';
 import 'package:e_commerce/features/common/ui/widgets/snack_bar_message.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,7 +28,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   late Timer timer;
   final OtpVerificationController _otpVerificationController =
       Get.find<OtpVerificationController>();
-
 
   @override
   void initState() {
@@ -169,18 +169,27 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
         _otpTEController.text,
       );
       if (response) {
-        if (mounted) {
-          Navigator.pushNamed(
-            context,
-            CompleteProfileScreen.name,
-          );
+        if (_otpVerificationController.shouldNavigateCompleteProfile) {
+          if (mounted) {
+            Navigator.pushNamed(
+              context,
+              CompleteProfileScreen.name,
+            );
+          }
+        } else {
+          if (mounted) {
+            Navigator.pushNamedAndRemoveUntil(
+                context, MainBottomNavScreen.name, (predicate) => false);
+          }
         }
-      } else {
-        if (mounted) {
-          showSnackBarMessage(
-              context, _otpVerificationController.errorMessage!);
+      }
+        else {
+          if (mounted) {
+            showSnackBarMessage(
+                context, _otpVerificationController.errorMessage!);
+          }
         }
       }
     }
   }
-}
+
