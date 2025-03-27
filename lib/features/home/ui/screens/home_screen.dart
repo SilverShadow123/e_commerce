@@ -1,8 +1,12 @@
 import 'package:e_commerce/app/assets_path.dart';
+import 'package:e_commerce/features/common/ui/controllers/category_list_controller.dart';
 import 'package:e_commerce/features/common/ui/controllers/main_bottom_nav_controller.dart';
+import 'package:e_commerce/features/common/ui/widgets/center_circular_progress_indicator.dart';
+import 'package:e_commerce/features/home/ui/controllers/home_banner_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import '../../../common/data/models/category_model.dart';
 import '../widgets/app_bar_icon_button.dart';
 import '../../../common/ui/widgets/catagory_item_widget.dart';
 import '../widgets/home_carousel_slider.dart';
@@ -22,6 +26,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _searchBarController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 16,
               ),
-              const carousel_home_slider(),
+              GetBuilder<HomeBannerListController>(builder: (controller) {
+                if (controller.inProgress) {
+                  return SizedBox(
+                    height: 180,
+                    child: CenterCircularProgressIndicator(),
+                  );
+                }
+
+                return carousel_home_slider(
+                  bannerList: controller.bannerList,
+                );
+              }),
               const SizedBox(
                 height: 16,
               ),
@@ -53,12 +69,21 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: 8,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: _getCatagoryList(),
-                ),
-              ),
+              GetBuilder<CategoryListController>(builder: (controller) {
+                if (controller.inProgress) {
+                  return SizedBox(
+                    height: 180,
+                    child: CenterCircularProgressIndicator(),
+                  );
+                }
+
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: _getCatagoryList(controller.categoryList),
+                  ),
+                );
+              }),
               const SizedBox(
                 height: 8,
               ),
@@ -108,13 +133,15 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  List<Widget> _getCatagoryList() {
+  List<Widget> _getCatagoryList(List<CategoryModel> categoryModels) {
     List<Widget> catagoryList = [];
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < categoryModels.length; i++) {
       catagoryList.add(
-        const Padding(
+        Padding(
           padding: EdgeInsets.only(right: 8),
-          child: CatagoryItemWidget(),
+          child: CategoryItemWidget(
+            categoryModel: categoryModels[i],
+          ),
         ),
       );
     }

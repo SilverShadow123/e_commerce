@@ -14,7 +14,7 @@ class ReadProfileController extends GetxController {
 
   ProfileModel? _profileModel;
 
-  ProfileModel? get getProfileModel => _profileModel;
+  ProfileModel? get profileModel => _profileModel;
 
   Future<bool> readProfileData(String token) async {
     bool isSuccess = false;
@@ -26,7 +26,7 @@ class ReadProfileController extends GetxController {
     );
     if (response.isSuccess) {
       _errorMessage = null;
-      if (response.responseData['data' == null]) {
+      if (response.responseData['data'] == null) {
         _profileModel = null;
       } else {
         _profileModel = ProfileModel.fromJson(response.responseData['data']);

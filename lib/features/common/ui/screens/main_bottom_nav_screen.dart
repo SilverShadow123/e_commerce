@@ -4,6 +4,8 @@ import 'package:e_commerce/features/home/ui/screens/home_screen.dart';
 import 'package:e_commerce/features/wishlist/ui/screens/wish_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../home/ui/controllers/home_banner_list_controller.dart';
+import '../controllers/category_list_controller.dart';
 import '../controllers/main_bottom_nav_controller.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
@@ -18,6 +20,18 @@ class MainBottomNavScreen extends StatefulWidget {
 class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   final MainBottomNavController bottomNavController =
       Get.find<MainBottomNavController>();
+  final HomeBannerListController _homebannerListController =
+  Get.find<HomeBannerListController>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    _homebannerListController.getHomeBannerList();
+    Get.find<CategoryListController>().getCategoryList();
+    super.initState();
+  }
+
+
   final List<Widget> _screens = const [
     HomeScreen(),
     CatagoryListScreen(),

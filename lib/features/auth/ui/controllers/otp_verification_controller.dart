@@ -31,12 +31,11 @@ class OtpVerificationController extends GetxController {
       isSuccess = true;
       String token = response.responseData['data'];
       await Get.find<ReadProfileController>().readProfileData(token);
-      if (Get.find<ReadProfileController>().getProfileModel == null) {
-        //TODO: complete profile
+      if (Get.find<ReadProfileController>().profileModel == null) {
         _shouldNavigateCompleteProfile = true;
       } else {
         await Get.find<AuthController>().saveUserData(
-            token, Get.find<ReadProfileController>().getProfileModel!);
+            token, Get.find<ReadProfileController>().profileModel!);
         _shouldNavigateCompleteProfile = false;
       }
     } else {

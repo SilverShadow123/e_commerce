@@ -4,7 +4,9 @@ import 'package:e_commerce/features/common/ui/controllers/auth_controller.dart';
 import 'package:e_commerce/services/network_caller/network_caller.dart';
 import 'package:get/get.dart';
 import '../features/auth/ui/controllers/otp_verification_controller.dart';
+import '../features/common/ui/controllers/category_list_controller.dart';
 import '../features/common/ui/controllers/main_bottom_nav_controller.dart';
+import '../features/home/ui/controllers/home_banner_list_controller.dart';
 
 class ControllerBinder extends Bindings {
   @override
@@ -15,5 +17,7 @@ class ControllerBinder extends Bindings {
     Get.put(EmailVerificationController());
     Get.put(OtpVerificationController());
     Get.put(ReadProfileController());
+    Get.put(HomeBannerListController());
+    Get.put(CategoryListController());
   }
 }
